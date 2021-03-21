@@ -10,8 +10,17 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Welcome to paymentsense-coding-challenge-website!');
+    expect(page.getTitleText()).toEqual('Paymentsense Coding Challenge!');
   });
+
+  it('should display Afghanistan in grid', () => {
+    expect(page.getFirstCountryInGrid()).toEqual('Afghanistan');
+  });
+
+  it('should open Afghanistan details on click', () => {
+    page.openFirstCountryDetailsDialog();
+    expect(page.getCountryDetailsDialogTitle()).toEqual('Afghanistan');
+  });  
 
   afterEach(async () => {
     // Assert that there are no errors emitted from the browser

@@ -4,16 +4,24 @@ import { AppComponent } from './app.component';
 import { PaymentsenseCodingChallengeApiService } from './services';
 import { MockPaymentsenseCodingChallengeApiService } from './testing/mock-paymentsense-coding-challenge-api.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AgGridModule } from 'ag-grid-angular';
+import { ImageFormatterComponent } from './components/ImageFormatterComponent';
+import { CountrySummaryComponent } from './components/CountrySummaryComponent';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        FontAwesomeModule
+        FontAwesomeModule,
+        MatDialogModule,
+        AgGridModule.withComponents([ImageFormatterComponent])
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        ImageFormatterComponent,
+        CountrySummaryComponent
       ],
       providers: [
         { provide: PaymentsenseCodingChallengeApiService, useClass: MockPaymentsenseCodingChallengeApiService }
@@ -38,5 +46,12 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('h1').textContent).toContain('Paymentsense Coding Challenge!');
+  });
+  
+  it('should render mock country', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('.ag-cell').textContent).toContain('Mock country');
   });
 });

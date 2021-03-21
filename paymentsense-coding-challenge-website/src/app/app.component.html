@@ -4,8 +4,16 @@
   <h1>
     {{ title }}
   </h1>
-  <h2>... Paymentsense Coding Challenge API is <fa-icon [icon]=paymentsenseCodingChallengeApiActiveIcon
-                                                        [styles]="{ 'stroke': paymentsenseCodingChallengeApiActiveIconColour, 'color': paymentsenseCodingChallengeApiActiveIconColour }"></fa-icon> ...</h2>
+  <ag-grid-angular 
+    style="width: 500px; height: 500px; margin: 0 auto; text-align: left;" 
+    class="ag-theme-balham"
+    [rowClass]="rowClass"
+    [rowData]="rowData" 
+    [columnDefs]="columnDefs"
+    [pagination]="pagination"
+    (rowClicked)='onRowClicked($event)'
+    >
+  </ag-grid-angular>
 </div>
 
 <router-outlet></router-outlet>

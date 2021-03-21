@@ -1,0 +1,45 @@
+<h1 mat-dialog-title>{{data.name}}</h1>
+<div mat-dialog-content>
+  <table cellspacing=0 class="country-summary">
+      <tr>
+          <td>Capital:</td>
+          <td>{{data.capitalCity}}</td>
+      </tr>
+      <tr>
+        <td>Population:</td>
+        <td>{{data.population}}</td>
+    </tr>
+    <tr>
+      <td>Time zones:</td>
+      <td>
+        <ul *ngFor="let timeZone of data.timeZones">
+          <li>{{timeZone.name}}</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+        <td>Languages:</td>
+        <td>
+          <ul *ngFor="let language of data.languages">
+            <li>{{language.name}}</li>
+          </ul>
+        </td>
+      </tr>    
+    <tr>
+      <td>Currencies:</td>
+      <td>
+        <ul *ngFor="let currency of data.currencies">
+          <li>{{currency.name}}</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Bordering countries:</td>
+      <td>
+        <ul *ngFor="let country of data.borderingCountries">
+          <li>{{country.name}}</li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+</div>

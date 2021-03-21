@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import { PaymentsenseCodingChallengeApiService } from './services';
 import { take } from 'rxjs/operators';
-import { faThumbsUp, faThumbsDown } from '@fortawesome/free-regular-svg-icons';
+import { ICountryDetailsModel } from './models/ICountryDetailsModel';
+import { ImageFormatterComponent } from "./components/ImageFormatterComponent";
+import { MatDialog } from '@angular/material/dialog';
+import { CountrySummaryComponent } from './components/CountrySummaryComponent';
 
 @Component({
   selector: 'app-root',
@@ -9,29 +12,32 @@ import { faThumbsUp, faThumbsDown } from '@fortawesome/free-regular-svg-icons';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public faThumbsUp = faThumbsUp;
-  public faThumbsDown = faThumbsDown;
+  
   public title = 'Paymentsense Coding Challenge!';
-  public paymentsenseCodingChallengeApiIsActive = false;
-  public paymentsenseCodingChallengeApiActiveIcon = this.faThumbsDown;
-  public paymentsenseCodingChallengeApiActiveIconColour = 'red';
+  public rowClass = 'grid-row';  
 
-  constructor(private paymentsenseCodingChallengeApiService: PaymentsenseCodingChallengeApiService) {
-    paymentsenseCodingChallengeApiService.getHealth().pipe(take(1))
+  onRowClicked(event: any) { 
+    this.dialog.open(CountrySummaryComponent, { data: event.data })
+  }
+
+  public rowData: ICountryDetailsModel[] = [];
+  public pagination: boolean = true;
+
+  public columnDefs = [
+    {headerName: 'Name', field: 'name'},
+    {headerName: 'Flag', field: 'flagImage', cellRendererFramework: ImageFormatterComponent}
+  ];
+
+  constructor(private paymentsenseCodingChallengeApiService: PaymentsenseCodingChallengeApiService, public dialog: MatDialog) {
+    this.dialog = dialog;
+
+    paymentsenseCodingChallengeApiService.getCountries().pipe(take(1))
     .subscribe(
-      apiHealth => {
-        this.paymentsenseCodingChallengeApiIsActive = apiHealth === 'Healthy';
-        this.paymentsenseCodingChallengeApiActiveIcon = this.paymentsenseCodingChallengeApiIsActive
-          ? this.faThumbsUp
-          : this.faThumbsUp;
-        this.paymentsenseCodingChallengeApiActiveIconColour = this.paymentsenseCodingChallengeApiIsActive
-          ? 'green'
-          : 'red';
+      countries => {
+        this.rowData = countries;
       },
       _ => {
-        this.paymentsenseCodingChallengeApiIsActive = false;
-        this.paymentsenseCodingChallengeApiActiveIcon = this.faThumbsDown;
-        this.paymentsenseCodingChallengeApiActiveIconColour = 'red';
+        alert('error');
       });
   }
 }
